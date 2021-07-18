@@ -1,0 +1,19 @@
+#端口配置
+server:
+    port: 8088
+#jdbc配置
+spring:
+    datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/dbbackup?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: root
+        password: root
+#mybatis配置
+mybatis:
+    #实体类所在包名
+    type-aliases-package: com.seenow.dbbackup.pojo
+    #通用mapper配置
+    mapper:
+        #公用接口类路径
+        mappers: com.seenow.dbbackup.dao
+        identity: MYSQL

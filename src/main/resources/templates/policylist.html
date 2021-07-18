@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--thymeleaf模板支持-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewpolicyName" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/skeleton.css">
+</head>
+<body>
+<div>
+    <div th:replace="~{common::header}"></div>
+    <!-- 显示由控制器传递过来的实体user的值-->
+    <div class="div-line" th:text="备份策略列表" th:object="${tpolicies}" ></div>
+
+    <div class="div-line">
+        <span>  HostIP:  </span><span th:text="${hostip}">  HostIP:  </span>
+        <span>     </span>
+        <span>  DbName:  </span><span th:text="${dbname}">  DbName:  </span> &nbsp&nbsp
+        <a th:href="@{/exeSql(dbid=${dbid})}"> Run! </a>
+        <span><label  th:text="${runMsg}" /></span><p>
+    </div>
+    <div class="div-line">
+        <table class="table-line">
+            <tr>
+                <th>policyName</th>
+                <th>completeBackup</th>
+                <th>tableName</th>
+                <th>signfld</th>
+                <th>daysLen</th>
+                <th>delSign</th>
+                <th colspan="2" style="text-align: center">Edit</th>
+            </tr>
+            <tr th:each="tPolicy: ${tpolicies}">
+                <td th:text="${tPolicy.policyName}">policyName</td>
+                <td th:text="${tPolicy.completeBackup}">completeBackup</td>
+                <td th:text="${tPolicy.tableName}">tableName</td>
+                <td th:text="${tPolicy.signfld}">signfld</td>
+                <td th:text="${tPolicy.daysLen}">daysLen</td>
+                <td th:text="${tPolicy.delSign}">delSign</td>
+                <td><a th:href="@{/delPolicy(policyId=${tPolicy.id},hostip=${hostip},dbname=${dbname},dbid=${dbid})}"> Del </a></td>
+                <td><a th:href="@{/policyEdit(pid=${tPolicy.getId()},hostip=${hostip},dbname=${dbname},dbid=${dbid})}"> Edit </a></td>
+            </tr>
+        </table>
+    </div>
+
+    <p></p><div class="div-line-a"><a th:href="@{/policyEdit(pid=${null},hostip=${hostip},dbname=${dbname},dbid=${dbid})}"> Add a new Policy ... </a></div>
+
+
+
+
+
+</div>
+</body>
+</html>
+

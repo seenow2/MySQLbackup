@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--thymeleaf模板支持-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/skeleton.css">
+</head>
+<body>
+    <div th:replace="~{common::header}"></div>
+    <div>
+        <div th:text="配置数据源" class="div-line"></div>
+        <form   th:action="@{/dbSourceEdit}" th:object="${tDbSource}" method="post">
+        <div style="width: 100%">
+            <input type="hidden" th:field="${tDbSource.id}"  />
+            <div class="div-a">Hostip: </div>
+            <div class="div-b"><input type="text" th:field="${tDbSource.hostip}"/></div><p>
+            <div class="div-a">Port: </div>
+            <div class="div-b"><input type="text" th:field="${tDbSource.port}"/></div><p>
+            <div class="div-a">DbName: </div>
+            <div class="div-b"><input type="text" th:field="${tDbSource.dbName}"/></div><p>
+            <div class="div-a">DbType: </div>
+            <div class="div-b"><input type="text"  th:field="${tDbSource.dbType}"/></div><p>
+            <div class="div-a">Username: </div>
+            <div class="div-b"><input type="text"  th:field="${tDbSource.username}"/></div><p>
+            <div class="div-a">Password: </div>
+            <div class="div-b"><input type="password" th:name="password" th:value="${tDbSource.password}"/></div><p>
+        </div>
+        <div>
+            <div class="div-line"><label  th:text="${connMsg}" /></div><p>
+            <div class="div-a"><button type="submit" name="action" value="testconn">Test Connect...</button></div>
+            <div class="div-b"><button type="submit" name="action" value="save" th:disabled="${vaild}" >save</button></div>
+        </div>
+
+        </form>
+
+    </div>
+</body>
+</html>

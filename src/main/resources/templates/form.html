@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<style type="text/css">
+   .warn{color:red}
+</style>
+<form th:action="@{/}" th:object="${tDbSource}"  >
+    <div>
+        <div>
+            <span>HostIP:</span>
+            <span><input type="text" th:field="*{hostip}"/></span>
+            <!--<span  class="warn" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">名字错误</span>-->
+        </div>
+        <div>
+            <span>Port:</span>
+            <!--<span><input type="number" th:field="*{age}"/></span>
+            <span  class="warn" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">年龄错误</span>-->
+        </div>
+        <div>
+            <span>Username:</span>
+            <!--<span><input TYPE="text" th:field="*{email}"/></span>
+            <span  class="warn" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">邮箱错误</span>-->
+        </div>
+        <div>
+            <span>Password:</span>
+            <!--<<span><input TYPE="password" th:field="*{answer}"/></span>
+            span  class="warn" th:if="${#fields.hasErrors('answer')}" th:errors="*{answer}">答案错误</span>-->
+        </div>
+        <div>
+            <span>
+                <button type="Test Connect...">提交</button>
+            </span>
+        </div>
+    </div>
+</form>
+</body>
+</html>
