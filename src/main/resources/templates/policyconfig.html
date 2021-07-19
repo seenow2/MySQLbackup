@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--thymeleaf模板支持-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <script type="text/javascript" src="js/policy.js" th:inline="javascript" ></script>
+    <script type="text/javascript" src="js/jquery.min.js" th:inline="javascript"></script>
+</head>
+<body onload="bakModChange()">
+    <div th:replace="~{common::header}"></div>
+    <div>
+        <div th:text="配置备份策略" class="div-line"></div><p>
+        <div class="div-line">
+            <h4>
+                <span>  HostIP:  </span><span th:text="${hostip}">  HostIP:  </span>
+                <span>     </span>
+                <span>  DbName:  </span><span th:text="${dbname}">  DbName:  </span>
+            </h4>
+        </div>
+        <form th:action="@{/savePolicy(dbid=${tPolicy.getDbId()},hostip=${hostip},dbname=${dbname})}" th:object="${tPolicy}" method="post">
+        <div>
+            <input type="hidden" th:field="${tPolicy.id}"  />
+            <input type="hidden" th:field="${tPolicy.dbId}" />
+            <div class="div-a">PolicyName:</div>
+            <div class="div-b"><input type="text" th:field="${tPolicy.policyName}"/></div>
+            <div class="div-a">选择是否执行全库备份：</div>
+            <div class="div-b">
+                <select th:field="${tPolicy.completeBackup}"  onchange="bakModChange()">
+                    <option th:selected="tPolicy.completeBackup=='1'" value="1">是</option>
+                    <option th:selected="tPolicy.completeBackup=='1'" value="0">否</option>
+                </select>
+                <span style="color:red">当此项为“否”时，下面的选项才有意义</span>
+            </div>
+            <div class="div-a">TableName:</div>
+            <div class="div-b">
+                <select id="tableName" th:fragment="tableName" name="tableName" onchange="tblNameChang()">
+                    <span th:if="${tablelist} ne null">
+                        <option th:each="table : ${tablelist}"  th:value="${table}" th:text="${table}" th:selected="${table  eq tableName}" >
+                    </span>
+                </select>
+            </div>
+            <span><input type="hidden" id="hTableName" th:value="${tPolicy.tableName}"  ></span>
+            <div class="div-a">标志字段:</div>
+            <div class="div-b">
+                <select id="signfld" th:fragment="signfld" name="signfld" >
+                    <span th:if="${fieldList} ne null">
+                        <option th:each="f : ${fieldList}"  th:value="${f}" th:text="${f}" th:selected="${f  eq signName}">
+                    </span>
+                </select>
+                <span style="color:red"> 只可选日期/时间型字段</span>
+            </div>
+            <span><input type="hidden" id="hSigFld" th:value="${tPolicy.signfld}"  ></span>
+            <div class="div-a">保留天数: </div>
+            <div class="div-b"><input type="text"  th:field="${tPolicy.daysLen}" onkeyup="check()" placeholder="保留天数请输入数字，如:120"/></div>
+            <div class="div-a">选择是否在备份完成后清除过期数据：</div>
+            <div class="div-b">
+                <select th:field="${tPolicy.delSign}">
+                    <option th:selected="tPolicy.delSign=='1'" value="0">否</option>
+                    <option th:selected="tPolicy.delSign=='1'" value="1">是</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="div-line"><label  th:text="${saveMsg}" /></div>
+        <div class="div-line"><button type="submit">save</button></div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--thymeleaf模板支持-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/skeleton.css">
+</head>
+<body>
+<div>
+    <div th:replace="~{common::header}"></div>
+    <!-- 显示由控制器传递过来的实体user的值-->
+    <div class="div-line" th:text="数据源列表" th:object="${tDbSources}"></div>
+    <div  class="div-line">
+        <table class="table-line" >
+        <tr>
+            <th>DbId</th>
+            <th>HostIP</th>
+            <th>port</th>
+            <th>dbName</th>
+            <th>dbType</th>
+            <th>username</th>
+            <th>password</th>
+            <th colspan="4" style="text-align: center">Detail</th>
+        </tr>
+        <tr th:each="db: ${tDbSources}">
+            <td th:text="${db.id}">HostIP</td>
+            <td th:text="${db.hostip}">HostIP</td>
+            <td th:text="${db.port}">port</td>
+            <td th:text="${db.dbName}">dbName</td>
+            <td th:text="${db.dbType}">dbType</td>
+            <td th:text="${db.username}">username</td>
+            <td th:text="${db.password}">password</td>
+            <td><a th:href="@{/editdb(dbid=${db.id})}"> Edit </a></td>
+            <td><a th:href="@{/deldb(dbid=${db.id})}" title="当删除数据源时会同步删除&#10;其上的备份策略，望三思！"> Del </a></td>
+            <td><a th:href="@{/poliList(dbid=${db.id},hostip=${db.getHostip()},dbname=${db.getDbName()})}"> Policies </a></td>
+            <td><a th:href="@{/bakLogList(dbid=${db.id},pageNum=1)}"> Logs </a></td>
+        </tr>
+    </table>
+    </div>
+    <p></p><div class="div-line-a"><a th:href="@{/editdb(dbid=${null})}"> Add a new DbSource ... </a></div>
+</div>
+</body>
+</html>
+

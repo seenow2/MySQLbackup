@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--thymeleaf模板支持-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/pagination.css">
+</head>
+<body>
+<div>
+    <div th:replace="~{common::header}"></div>
+    <div class="div-line" th:text="备份日志列表" th:object="${tBackupLogs}"></div>
+    <div  class="div-line">
+        <table class="table-line" >
+        <tr>
+            <th>DbId</th>
+            <th>succeed</th>
+            <th>creater</th>
+            <th>createTime</th>
+            <th style="text-align: center" width="60%">content</th>
+            <th>Edit</th>
+        </tr>
+        <tr th:each="db: ${tBackupLogs}">
+            <td th:text="${db.dbid}">dbid</td>
+            <td th:text="${db.succeed}">succeed</td>
+            <td th:text="${db.creater}">creater</td>
+            <td th:text="${#dates.format(db.createTime, 'yyyy-MM-dd HH:mm')}">createTime</td>
+            <td th:text="${db.content}" width="60%">content</td>
+            <td><a th:href="@{/delbaklog(logid=${db.id},dbid=${db.dbid})}"  > Del </a></td>
+        </tr>
+    </table>
+    </div>
+
+    <!--分页-->
+    <div class="page__demo">
+        <div class="demo">
+            <ul class="pagination pagination_type1">
+                <li class="pagination__item" th:if="${pageInfo.pageNum!=1}"><a class="pagination__number" th:href="@{/bakLogList(dbid=${dbid},pageNum=1)}">首页</a></li>
+                <li class="pagination__item" th:if="${pageInfo.pageNum!=1}"><a class="pagination__number" th:href="@{/bakLogList(dbid=${dbid},pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:${pageInfo.pages})}">上一页</a></li>
+                <li class="pagination__item"><a class="pagination__number"><span th:text="第+${pageInfo.pageNum}+页"></span></a></li>
+                <li class="pagination__item"><a class="pagination__number"><span th:text="共+${pageInfo.pages}+页"></span></a></li>
+                <li class="pagination__item" th:if="${pageInfo.pageNum != pageInfo.pages}"><a class="pagination__number" th:href="@{/bakLogList(dbid=${dbid},pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a></li>
+                <li class="pagination__item" th:if="${pageInfo.pageNum != pageInfo.pages}"><a class="pagination__number" th:href="@{/bakLogList(dbid=${dbid},pageNum=${pageInfo.pages})}">尾页</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+
